@@ -1,0 +1,264 @@
+/* Presentation and interaction polish layered on top of the original game UI. */
+.crest {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0;
+  overflow: visible;
+  text-shadow: none !important;
+}
+
+.crest-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 4px 5px #0006);
+}
+
+.crest-svg .crest-outline {
+  fill: none;
+  stroke: #ffffff70;
+  stroke-width: 2;
+}
+
+.crest-svg text {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 950;
+  letter-spacing: 1px;
+}
+
+.crest.tiny .crest-svg text {
+  font-size: 13px;
+}
+
+.card-monogram,
+.mini-monogram {
+  font-size: 0 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+}
+
+.card-monogram {
+  flex: 0 0 68px;
+  height: 68px;
+  min-height: 68px;
+  margin: 3px 0 5px;
+  overflow: hidden;
+}
+
+.player-avatar-svg {
+  display: block;
+  width: 100%;
+  height: 68px;
+  max-height: 68px;
+  object-fit: contain;
+}
+
+.mini-monogram .player-avatar-svg {
+  height: 37px;
+  max-height: 37px;
+}
+
+/* Player cards have an explicit vertical rhythm. The name owns its own row,
+   so long names can wrap without ever being covered by the stats. */
+.player-card {
+  aspect-ratio: auto !important;
+  display: grid !important;
+  grid-template-rows: auto 68px 34px auto auto;
+  align-content: start;
+  height: 264px;
+  min-height: 264px;
+  padding: 12px 12px 13px;
+}
+
+.card-top {
+  min-height: 43px;
+}
+
+.card-name {
+  min-width: 0;
+  min-height: 34px;
+  height: 34px;
+  margin: 0 0 3px;
+  padding: 0 2px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  line-height: 1.06;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  overflow-wrap: anywhere;
+}
+
+.card-stats {
+  min-height: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.card-edition {
+  min-height: 9px;
+  line-height: 1;
+}
+
+.reveal-card .player-card {
+  height: 284px;
+  min-height: 284px;
+}
+
+.pack-result .player-card {
+  height: 264px;
+  min-height: 264px;
+}
+
+.crest-builder {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  margin-top: 11px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #101b1f;
+}
+
+.crest-preview {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: .68rem;
+  text-align: center;
+}
+
+.crest-preview .crest {
+  width: 76px;
+  height: 84px;
+}
+
+.crest-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.crest-controls select {
+  min-height: 40px;
+  padding: 8px;
+  font-size: .78rem;
+}
+
+.crest-color-row {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.crest-settings {
+  padding: 4px 0 18px;
+}
+
+.crest-settings .panel-heading {
+  margin-bottom: 8px;
+}
+
+.crest-settings .panel-heading p {
+  font-size: .78rem;
+  margin-top: 3px;
+}
+
+.save-crest-btn {
+  margin-top: 11px;
+  width: 100%;
+}
+
+.simulate-all {
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .player-card,
+  .pack-result .player-card {
+    height: 258px;
+    min-height: 258px;
+  }
+
+  .reveal-card .player-card {
+    height: 276px;
+    min-height: 276px;
+  }
+
+  .crest-builder {
+    grid-template-columns: 86px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .crest-preview .crest {
+    width: 62px;
+    height: 70px;
+  }
+
+  .crest-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .crest-color-row {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .page-heading .simulate-all {
+    padding: 9px 10px;
+    font-size: .73rem;
+  }
+}
+
+.pitch-player,
+.bench button {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.pitch-player:active,
+.bench button:active {
+  cursor: grabbing;
+}
+
+.drag-source {
+  opacity: .5;
+  transform: translate(-50%, -50%) scale(.96) !important;
+}
+
+.bench button.drag-source {
+  transform: scale(.96) !important;
+}
+
+.drag-target {
+  outline: 2px dashed var(--lime);
+  outline-offset: 3px;
+  filter: brightness(1.15);
+}
+
+.drag-hint {
+  color: var(--muted);
+  font-size: .72rem;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .drag-hint {
+    display: none;
+  }
+}

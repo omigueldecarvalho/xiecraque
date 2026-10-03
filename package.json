@@ -1,0 +1,8 @@
+{
+  "name": "xi-e-craque",
+  "version": "1.3.0",
+  "private": true,
+  "description": "Futebol, cartas e uma carreira de cinco temporadas no navegador.",
+  "scripts": { "start": "node server.cjs", "dev": "node server.cjs", "test": "node tests/engine.test.cjs" },
+  "engines": { "node": ">=18" }
+}
