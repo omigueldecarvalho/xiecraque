@@ -510,12 +510,12 @@ Diógenes|BR|GOL|75
 G. Escobar|AR|LE|77
 Willian Arão|BR|ZAG|78
 Rhuan|BR|ATA|70
-Miguel|BR|MEI|70
-Pedro|BR|VOL|70
-Guilherme|BR|MEI|70
-Gabriel|BR|MC|70
-Thiago|BR|GOL|70
-Vitor|BR|ATA|70
+Miguel Maknha|BR|MEI|70
+Pedro H2N2|BR|VOL|70
+GuiGui|BR|MEI|70
+GaGa|BR|MC|70
+Thiago PJ|BR|GOL|70
+Vitor sem c|BR|ATA|70
 `; 
   const hash = str => [...str].reduce((a,c)=>((a*31+c.charCodeAt(0))>>>0),5381);
   const profiles = {
