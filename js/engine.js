@@ -189,5 +189,5 @@ function validate(s){try{
  }catch{return false;}}
 function career(s){let rows=s.history;let stats=Object.values(s.careerStats).sort((a,b)=>b.g-a.g||b.a-a.a),wins=rows.reduce((a,h)=>a+h.table.find(t=>t.id==='user').w,0);return {titles:rows.filter(h=>h.position===1).length,best:rows.length?Math.min(...rows.map(h=>h.position)):0,score:rows.length?Math.round(mean(rows.map(h=>h.score))):0,goals:stats.reduce((a,p)=>a+p.g,0),wins,matches:rows.length*19,star:stats[0],overall:metrics(team(s,'user')).overall};}
 const engine={createClub,random,fit,autoLineup,optimize,value,tier,revealLabel,packPool,team,metrics,expected,preview,ranked,advanceRound,leaders,claim,updateObjectives,nextSeason,openPack,reveal,choosePackCard,finishPack,sell,saleReason,swap,benchSwap,changeFormation,validate,career,coachLabel};
-if(typeof module!=='undefined'&&module.exports){require('./seasons.js')(engine,D);require('./goals.js')(engine,D);module.exports=engine;}else root.OuroEngine=engine;
+if(typeof module!=='undefined'&&module.exports){require('./seasons.js')(engine,D);require('./goals.js')(engine,D);require('./club-book.js')(engine,D);module.exports=engine;}else root.OuroEngine=engine;
 })(typeof window!=='undefined'?window:globalThis);

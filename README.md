@@ -33,6 +33,10 @@ Depois acesse `http://localhost:4173`. No VS Code, abra a pasta extraída que co
 - 20 objetivos de carreira: escolha três ou nenhum ao criar o clube. Progresso, selos cartoon e selo de ouro para o trio completo, inclusive na retrospectiva para baixar/compartilhar.
 - Recompensa permanente: complete os três desafios para criar uma carta 88 OVR com nome, posição e nacionalidade. Ela acompanha os próximos clubes e fica protegida contra vendas e eventos.
 - Liga de 20 clubes em turno único com 19 rodadas.
+- **Rival declarado:** escolha um dos 19 adversários na criação. Clássicos recebem destaque antes e depois da partida, placares acumulados e espaço no jornal.
+- **Apelidos da torcida:** seis apelidos automáticos por desempenho, com critérios visíveis nos detalhes de cada jogador. Aparecem em Minhas cartas e no jornal.
+- **Álbum permanente:** cartas descobertas nos pacotes, inclusive repetidas, permanecem entre carreiras. Filtros por nome, posição, categoria e cartas faltantes; versões comuns e Time da Semana são separadas.
+- **Hall da Fama pessoal:** registra carreiras completas, cinco colocações, prêmios, artilheiro do clube, rivalidade e seis recordes pessoais. Veja **Carreira → Álbum permanente / Hall da Fama**, ou os atalhos na tela inicial.
 - Botão **Simular tudo**: usa a escalação atual e avança as partidas automaticamente. Pausa em cada encerramento para apresentar os resultados, prêmios e jornal; depois do evento, **Continuar simulação** avança a próxima temporada. **Parar simulação** permite voltar a montar o elenco. São no máximo cinco temporadas.
 - Simulação baseada em força dos setores, posição, tática, mando de campo, banco e variação de finalização.
 - Relato curto da partida, gols, assistências, notas, posse, finalizações e gol esperado.
@@ -44,6 +48,12 @@ Depois acesse `http://localhost:4173`. No VS Code, abra a pasta extraída que co
 - Cinco temporadas no máximo, com imagem final para baixar ou compartilhar.
 - Salvamento automático no navegador e exportação/importação de backup.
 - Layout responsivo para computador e celular.
+
+## Memórias do clube — versão 1.5
+
+As regras de rivalidade, apelidos, coleção e recordes estão em **[MEMORIAS_DO_CLUBE.md](MEMORIAS_DO_CLUBE.md)**. Álbum e Hall continuam salvos ao iniciar outra carreira e entram no backup. Importações somam descobertas e resumos sem duplicar a mesma carreira.
+
+Antes de atualizar, use **Configurações → Exportar progresso**. Extraia esta versão em uma pasta nova e importe o backup. Se usar servidor local, mantenha o mesmo endereço e porta para acessar o salvamento do navegador; abrir outra cópia diretamente como arquivo pode usar um armazenamento separado.
 
 ## Eventos entre temporadas
 
