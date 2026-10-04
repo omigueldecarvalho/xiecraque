@@ -560,7 +560,7 @@ Vitor|BR|ATA|70
     {id:'defense',name:'Muralha',subtitle:'Seu gol mais protegido',price:3100,count:3,min:82,tier:'gold',weights:[0,32,63,5],positions:['GOL','LE','LD','ZAG','VOL'],desc:'3 defensores · 1 jogador 82+ garantido',unlock:1},
     {id:'choice',name:'A Escolha',subtitle:'Três opções. A decisão é sua.',price:3500,count:3,min:80,max:85,mode:'choice',tier:'choice',weights:[0,0,100,0],desc:'Revele 3 jogadores 80–85 · leve apenas 1',unlock:1},
     {id:'elite',name:'Elite',subtitle:'Para mudar o nível do clube',price:8400,count:4,min:85,tier:'elite',weights:[0,12,73,15],desc:'4 cartas · 1 jogador 85+ garantido',unlock:2},
-    {id:'totw',name:'Time da Semana',subtitle:'Os destaques viraram cartas pretas',price:8400,count:4,min:80,tier:'totw',weights:[0,12,73,15],desc:'1 carta da semana + 3 cartas comuns',unlock:1},
+    {id:'totw',name:'Time da Semana',subtitle:'Os destaques viraram cartas pretas',price:8400,count:2,min:80,tier:'totw',weights:[0,12,73,15],desc:'1 carta da semana + 1 cartas comum',unlock:1},
     {id:'legend',name:'Galáctico',subtitle:'As estrelas do futebol mundial',price:22500,count:5,min:88,tier:'elite',weights:[0,0,65,35],desc:'5 cartas · 1 jogador 88+ garantido',unlock:3}
   ];
   const captains=players.filter(p=>p.ovr>=80&&p.ovr<=85).map(p=>p.id);
