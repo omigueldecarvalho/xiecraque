@@ -88,7 +88,7 @@
     const more=step<names.length-1, locked=step===4&&!h.event?.resolved;
     const action=more?'story-next':current?(h.season===5?'finish-career':'next-season'):'close';
     const label=more?['Ver Chuteira de Ouro','Ver Bola de Ouro','Ler o jornal','Ver evento das férias'][step]:current?(h.season===5?'Ver minha carreira':s.autoCareer?'Continuar simulação':'Iniciar temporada '+(h.season+1)):'Voltar ao clube';
-    return `<div class="season-story"><header class="story-nav"><div class="story-steps">${names.map((n,i)=>`<span class="${i===step?'current':i<step?'done':''}">${i+1}<small>${n}</small></span>`).join('')}</div><button class="icon-btn" data-action="close" aria-label="Voltar ao clube">×</button></header>${body}<footer class="story-actions">${step>0?'<button class="btn secondary" data-action="story-back">Voltar</button>':''}${s.autoCareer?'<button class="text-button" data-action="stop-auto">Parar simulação</button>':''}<button class="btn" data-action="${action}" ${locked?'disabled':''}>${locked?'Resolva o evento para continuar':label}</button></footer>${s.autoCareer?'<p class="auto-explanation">Simulação em andamento: as partidas avançam automaticamente. Prêmios e eventos fazem uma pausa para você acompanhar.</p>':''}</div>`;
+    return `<div class="season-story"><header class="story-nav"><div class="story-steps">${names.map((n,i)=>`<span class="${i===step?'current':i<step?'done':''}">${i+1}<small>${n}</small></span>`).join('')}</div><button class="icon-btn" data-action="close" aria-label="Voltar ao clube">×</button></header>${body}${step===0&&current?window.OuroGoalsView.summary(s,true):''}<footer class="story-actions">${step>0?'<button class="btn secondary" data-action="story-back">Voltar</button>':''}${s.autoCareer?'<button class="text-button" data-action="stop-auto">Parar simulação</button>':''}<button class="btn" data-action="${action}" ${locked?'disabled':''}>${locked?'Resolva o evento para continuar':label}</button></footer>${s.autoCareer?'<p class="auto-explanation">Simulação em andamento: as partidas avançam automaticamente. Prêmios e eventos fazem uma pausa para você acompanhar.</p>':''}</div>`;
   }
 
   function drawSymbol(ctx,type,x,y,size) {
@@ -97,17 +97,17 @@
   }
   function drawFinal(canvas,s) {
     if(!canvas)return;
-    const c=E.career(s),ctx=canvas.getContext('2d');canvas.width=1080;canvas.height=1350;
+    const c=E.career(s),ctx=canvas.getContext('2d');canvas.width=1080;canvas.height=E.careerGoalStatus(s).goals.length?1700:1350;
     const rect=(x,y,w,h,fill,r=18)=>{ctx.fillStyle=fill;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();};
     const text=(str,x,y,max,size,fill='#f7f4de',weight=700)=>{ctx.fillStyle=fill;ctx.font=`${weight} ${size}px Arial`;while(ctx.measureText(str).width>max&&size>14){size--;ctx.font=`${weight} ${size}px Arial`;}ctx.fillText(str,x,y);};
-    rect(0,0,1080,1350,'#122d2a',0);rect(28,28,1024,1294,'#1e3f35',28);ctx.strokeStyle='#c3e77a';ctx.lineWidth=3;ctx.strokeRect(49,49,982,1252);
+    rect(0,0,1080,canvas.height,'#122d2a',0);rect(28,28,1024,canvas.height-56,'#1e3f35',28);ctx.strokeStyle='#c3e77a';ctx.lineWidth=3;ctx.strokeRect(49,49,982,canvas.height-98);
     text('XI',80,127,90,62,'#c3e77a',900);text('XI, É CRAQUE',183,99,600,24);text('CINCO TEMPORADAS. UM LEGADO.',183,130,800,18,'#bfd2bf');
     text(s.club.name,80,231,920,59);text(E.coachLabel(c.score),80,282,900,29,'#c3e77a');
     [['trophy',c.titles,'TÍTULOS'],['boot',c.goldenBoots,'CHUTEIRAS DE OURO'],['ball',c.goldenBalls,'BOLAS DE OURO']].forEach(([type,n,label],i)=>{const x=80+i*315;rect(x,327,294,184,'#f5e8bb');drawSymbol(ctx,type,x+24,346,72);text(String(n),x+122,412,146,58,'#26392d',900);text(label,x+23,475,251,18,'#42513b');});
-    [['MELHOR POSIÇÃO',c.best+'º'],['VITÓRIAS',String(c.wins)],['GOLS',String(c.goals)],['FORÇA FINAL',String(c.overall)]].forEach(([label,v],i)=>{const x=80+i*236;rect(x,539,217,125,'#315544');text(v,x+19,597,180,42,'#fff2ce',850);text(label,x+19,634,180,16,'#bfd5bc');});
+    [['MELHOR POSIÇÃO',c.best+'º'],['VITÓRIAS',String(c.wins)],['GOLS',String(c.goals)],['FORÇA FINAL',String(c.overall)]].forEach(([label,v],i)=>{const x=80+i*236;rect(x,539,217,125,'#315544');text(v,x+19,597,180,42,'#fff2ce',800);text(label,x+19,634,180,16,'#bfd5bc');});
     text('OS CAPÍTULOS DO CLUBE',80,719,900,22,'#c3e77a');
     s.history.forEach((h,i)=>{const y=749+i*66;rect(80,y,923,57,i%2?'#284a3c':'#315544',8);text('TEMP. '+h.season,96,y+37,135,18,'#bbd2bc');text(h.position+'º LUGAR',252,y+37,207,23,h.position===1?'#ffd66b':'#f3f3db');text(h.table.find(t=>t.id==='user').pts+' PTS',474,y+37,150,20);text(h.score+'/100',671,y+37,130,20,'#c3e77a');if(h.scorer?.team==='user')drawSymbol(ctx,'boot',837,y+9,37);if(h.ballWinner?.team==='user')drawSymbol(ctx,'ball',920,y+9,37);});
-    text('NOME PARA A HISTÓRIA',80,1140,610,18,'#f2ce71');text(c.star?D.byId[c.star.id].name:'Seu elenco',80,1183,610,34);text(c.star?c.star.g+' gols · '+c.star.a+' assistências':'Uma história coletiva',80,1220,650,22,'#bdd3bd');text(c.score+'/100',803,1175,190,40,'#c3e77a');text('AVALIAÇÃO FINAL',791,1213,220,16,'#bdd3bd');text('Meu clube. Meu XI de craques.',80,1274,900,18,'#a9c6ad');
+    text('NOME PARA A HISTÓRIA',80,1140,610,18,'#f2ce71');text(c.star?D.byId[c.star.id].name:'Seu elenco',80,1183,610,34);text(c.star?c.star.g+' gols · '+c.star.a+' assistências':'Uma história coletiva',80,1220,650,22,'#bdd3bd');text(c.score+'/100',803,1175,190,40,'#c3e77a');text('AVALIAÇÃO FINAL',791,1213,220,16,'#bdd3bd');window.OuroGoalsView.drawFinalGoals(ctx,s,1280);text('Meu clube. Meu XI de craques.',80,canvas.height-76,900,18,'#a9c6ad');
     return canvas;
   }
   window.OuroStory={symbol,avatar,scene,cabinet,render,drawFinal};

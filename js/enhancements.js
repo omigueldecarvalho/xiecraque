@@ -110,7 +110,7 @@
   function enhanceAvatars(root) {
     root.querySelectorAll('.card-monogram, .mini-monogram').forEach((node) => {
       if (node.dataset.avatarEnhanced) return;
-      const seed = node.textContent.trim() || 'player';
+      const seed = node.dataset.avatarSeed || node.textContent.trim() || 'player';
       node.textContent = '';
       node.insertAdjacentHTML('afterbegin', avatarSvg(seed));
       node.dataset.avatarEnhanced = '1';

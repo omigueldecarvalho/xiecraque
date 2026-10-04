@@ -119,7 +119,7 @@ function advanceRound(s){if(s.phase!=='active')throw Error('A temporada já term
  if(s.round===19)finishSeason(s);return m;
 }
 function leaders(s,key='g'){return Object.values(s.stats).filter(p=>p[key]>0).sort((a,b)=>b[key]-a[key]||(key==='g'?b.a-a.a:b.g-a.g)||a.minutes-b.minutes);}
-function coachScore(s){const row=s.table.find(t=>t.id==='user'),position=ranked(s).findIndex(t=>t.id==='user')+1;return Math.round(clamp((21-position)*3+row.pts/57*25+metrics(team(s,'user')).overall/100*15,0,100));}
+function coachScore(s){const row=s.table.find(t=>t.id==='user'),position=ranked(s).findIndex(t=>t.id==='user')+1;return Math.round(clamp((21-position)*3+row.pts/57*25+Math.min(1,metrics(team(s,'user')).overall/90)*15,0,100));}
 function coachLabel(score){return score>=90?'Lenda da prancheta':score>=78?'Técnico de elite':score>=63?'Projeto em ascensão':score>=45?'Em construção':'Hora de reinventar';}
 function finishSeason(s){let table=ranked(s),position=table.findIndex(t=>t.id==='user')+1,champ=team(s,table[0].id),score=coachScore(s);const prize=position===1?6500:position<=4?4200:position<=10?2800:1600;earnings(s,prize);
  // Completed objectives are credited once on closure, so no reward is lost at rollover.
@@ -189,5 +189,5 @@ function validate(s){try{
  }catch{return false;}}
 function career(s){let rows=s.history;let stats=Object.values(s.careerStats).sort((a,b)=>b.g-a.g||b.a-a.a),wins=rows.reduce((a,h)=>a+h.table.find(t=>t.id==='user').w,0);return {titles:rows.filter(h=>h.position===1).length,best:rows.length?Math.min(...rows.map(h=>h.position)):0,score:rows.length?Math.round(mean(rows.map(h=>h.score))):0,goals:stats.reduce((a,p)=>a+p.g,0),wins,matches:rows.length*19,star:stats[0],overall:metrics(team(s,'user')).overall};}
 const engine={createClub,random,fit,autoLineup,optimize,value,tier,revealLabel,packPool,team,metrics,expected,preview,ranked,advanceRound,leaders,claim,updateObjectives,nextSeason,openPack,reveal,choosePackCard,finishPack,sell,saleReason,swap,benchSwap,changeFormation,validate,career,coachLabel};
-if(typeof module!=='undefined'&&module.exports){require('./seasons.js')(engine,D);module.exports=engine;}else root.OuroEngine=engine;
+if(typeof module!=='undefined'&&module.exports){require('./seasons.js')(engine,D);require('./goals.js')(engine,D);module.exports=engine;}else root.OuroEngine=engine;
 })(typeof window!=='undefined'?window:globalThis);

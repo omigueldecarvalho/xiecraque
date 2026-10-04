@@ -62,12 +62,13 @@
   ];
 
   function eventTargets(s, def) {
-    const starters = [...s.lineup];
-    if (def.target === 'topSquad') return bestFirst(s.squad).slice(0, def.kind === 'choice' ? 3 : 1);
+    const available = ids => ids.filter(id => id !== s.legacyCard?.id);
+    const starters = available(s.lineup);
+    if (def.target === 'topSquad') return bestFirst(available(s.squad)).slice(0, def.kind === 'choice' ? 3 : 1);
     if (def.target === 'topStarters') return bestFirst(starters).slice(0, 3);
-    if (def.target === 'mutiny') return [s.captain, ...shuffle(s, starters.filter(id => id !== s.captain)).slice(0, 2)];
-    if (def.target === 'bench') return bestFirst(s.bench).slice(0, def.count);
-    if (def.target === 'keeper') return [starters.find(id => D.byId[id].pos === 'GOL') || starters[0]];
+    if (def.target === 'mutiny') return s.captain === s.legacyCard?.id ? shuffle(s, starters).slice(0, 3) : [s.captain, ...shuffle(s, starters.filter(id => id !== s.captain)).slice(0, 2)];
+    if (def.target === 'bench') return bestFirst(available(s.bench)).slice(0, def.count);
+    if (def.target === 'keeper') return [starters.find(id => D.byId[id].pos === 'GOL') || available(s.squad).find(id => D.byId[id].pos === 'GOL') || starters[0]];
     const positions = def.target === 'attack' ? ['ATA', 'PE', 'PD', 'MEI'] : ['ZAG', 'LE', 'LD', 'VOL'];
     if (def.target === 'attack' || def.target === 'defense') {
       const pool = starters.filter(id => positions.includes(D.byId[id].pos));
@@ -81,6 +82,14 @@
     const used = new Set(s.history.filter(x => x.event).map(x => x.event.id));
     const def = pick(s, E.seasonEvents.filter(x => !used.has(x.id)));
     h.event = {...clone(def), season:h.season, targets:eventTargets(s, def), resolved:false};
+    if (s.legacyCard) {
+      h.event.description += ' Sua lenda é permanente e fica protegida; os alvos são os demais jogadores elegíveis.';
+      if (def.id === 'mutiny' && s.captain === s.legacyCard.id) h.event.effect = 'Sua lenda permanece: três outros titulares saem por 0 moedas.';
+      if (def.id === 'keeper' && s.lineup[0] === s.legacyCard.id) {
+        h.event.description = 'Sua lenda está protegida. Outro goleiro do elenco decidiu não renovar o contrato.';
+        h.event.effect = 'O goleiro indicado sai por 0 moedas. Sua lenda permanece no clube.';
+      }
+    }
   }
 
   E.ensureSeason = function(s, h = s.history.at(-1)) {
@@ -108,7 +117,7 @@
   // Departure events bypass sale income, then preserve a usable 18-player club.
   // Only vacant starting slots change. The rest of the user's lineup is kept.
   function removePlayers(s, ids) {
-    const departed = [...new Set(ids)].filter(id => s.squad.includes(id));
+    const departed = [...new Set(ids)].filter(id => s.squad.includes(id) && id !== s.legacyCard?.id);
     const originalLineup = [...s.lineup], originalBench = [...s.bench], added = [];
     s.squad = s.squad.filter(id => !departed.includes(id));
     const recruit = position => {

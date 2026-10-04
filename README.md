@@ -30,6 +30,8 @@ Depois acesse `http://localhost:4173`. No VS Code, abra a pasta extraída que co
 - Cartas com avatares cartoon, nomes, atributos e rodapé em áreas separadas, sem sobreposição. Escudos SVG próprios para cada clube.
 - Arraste cartas entre titulares e banco para trocar posições; toque/clique continua abrindo o seletor.
 - Venda de jogadores, duplicatas convertidas em moedas e objetivos de temporada.
+- 20 objetivos de carreira: escolha três ou nenhum ao criar o clube. Progresso, selos cartoon e selo de ouro para o trio completo, inclusive na retrospectiva para baixar/compartilhar.
+- Recompensa permanente: complete os três desafios para criar uma carta 88 OVR com nome, posição e nacionalidade. Ela acompanha os próximos clubes e fica protegida contra vendas e eventos.
 - Liga de 20 clubes em turno único com 19 rodadas.
 - Botão **Simular tudo**: usa a escalação atual e avança as partidas automaticamente. Pausa em cada encerramento para apresentar os resultados, prêmios e jornal; depois do evento, **Continuar simulação** avança a próxima temporada. **Parar simulação** permite voltar a montar o elenco. São no máximo cinco temporadas.
 - Simulação baseada em força dos setores, posição, tática, mando de campo, banco e variação de finalização.
@@ -44,6 +46,8 @@ Depois acesse `http://localhost:4173`. No VS Code, abra a pasta extraída que co
 - Layout responsivo para computador e celular.
 
 ## Eventos entre temporadas
+
+As regras dos novos desafios, da carta permanente e da atualização estão em **[OBJETIVOS_E_RECOMPENSAS.md](OBJETIVOS_E_RECOMPENSAS.md)**. Carreiras anteriores continuam funcionando; a seleção de objetivos é feita ao criar uma nova carreira.
 
 Um evento é sorteado ao terminar cada uma das quatro primeiras temporadas, sem repetir na mesma carreira. A escolha e as consequências ficam salvas; recarregar a página não troca o evento nem aplica a punição novamente. Não há evento após a quinta temporada.
 
